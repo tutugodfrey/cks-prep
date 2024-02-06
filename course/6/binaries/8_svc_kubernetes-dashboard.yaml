@@ -1,0 +1,2 @@
+NAME                   TYPE       CLUSTER-IP     EXTERNAL-IP   PORT(S)                        AGE
+kubernetes-dashboard   NodePort   10.104.200.2   <none>        9090:30973/TCP,443:32324/TCP   131d
