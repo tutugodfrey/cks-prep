@@ -1,0 +1,160 @@
+{
+  "kind": "Event",
+  "apiVersion": "audit.k8s.io/v1",
+  "level": "RequestResponse",
+  "auditID": "74fd9e03-abea-4df1-b3d0-9cfeff9ad97a",
+  "stage": "ResponseComplete",
+  "requestURI": "/api/v1/namespaces/security/secrets/vault-token",
+  "verb": "get",
+  "user": {
+    "username": "system:serviceaccount:security:p.auster",
+    "uid": "29ecb107-c0e8-4f2d-816a-b16f4391999c",
+    "groups": [
+      "system:serviceaccounts",
+      "system:serviceaccounts:security",
+      "system:authenticated"
+    ]
+  },
+  "sourceIPs": [
+    "192.168.102.21"
+  ],
+  "userAgent": "curl/7.64.0",
+  "objectRef": {
+    "resource": "secrets",
+    "namespace": "security",
+    "name": "vault-token",
+    "apiVersion": "v1"
+  },
+  "responseStatus": {
+    "metadata": {},
+    "code": 200
+  },
+  "responseObject": {
+    "kind": "Secret",
+    "apiVersion": "v1",
+    "metadata": {
+      "name": "vault-token",
+      "namespace": "security",
+      "selfLink": "/api/v1/namespaces/security/secrets/vault-token",
+      "uid": "2b079b5e-3e9a-466b-a7ab-c25644bc4806",
+      "resourceVersion": "29249",
+      "creationTimestamp": "2020-09-24T21:13:06Z",
+      "annotations": {
+        "kubectl.kubernetes.io/last-applied-configuration": "{\"apiVersion\":\"v1\",\"data\":{\"password\":\"bERhR0hhcERKcnVuCg==\"},\"kind\":\"Secret\",\"metadata\":{\"annotations\":{},\"name\":\"vault-token\",\"namespace\":\"security\"},\"type\":\"Opaque\"}\n"
+      },
+      "managedFields": [
+        {
+          "manager": "kubectl-client-side-apply",
+          "operation": "Update",
+          "apiVersion": "v1",
+          "time": "2020-09-24T21:13:06Z",
+          "fieldsType": "FieldsV1",
+          "fieldsV1": {
+            "f:data": {
+              ".": {},
+              "f:password": {}
+            },
+            "f:metadata": {
+              "f:annotations": {
+                ".": {},
+                "f:kubectl.kubernetes.io/last-applied-configuration": {}
+              }
+            },
+            "f:type": {}
+          }
+        }
+      ]
+    },
+    "data": {
+      "password": "bERhR0hhcERKcnVuCg=="
+    },
+    "type": "Opaque"
+  },
+  "requestReceivedTimestamp": "2020-09-24T21:27:54.498663Z",
+  "stageTimestamp": "2020-09-24T21:27:54.500151Z",
+  "annotations": {
+    "authentication.k8s.io/legacy-token": "system:serviceaccount:security:p.auster",
+    "authorization.k8s.io/decision": "allow",
+    "authorization.k8s.io/reason": "RBAC: allowed by ClusterRoleBinding \"p.auster\" of ClusterRole \"cluster-admin\" to ServiceAccount \"p.auster/security\""
+  }
+}
+{
+  "kind": "Event",
+  "apiVersion": "audit.k8s.io/v1",
+  "level": "RequestResponse",
+  "auditID": "aed6caf9-5af0-4872-8f09-ad55974bb5e0",
+  "stage": "ResponseComplete",
+  "requestURI": "/api/v1/namespaces/security/secrets/mysql-admin",
+  "verb": "get",
+  "user": {
+    "username": "system:serviceaccount:security:p.auster",
+    "uid": "29ecb107-c0e8-4f2d-816a-b16f4391999c",
+    "groups": [
+      "system:serviceaccounts",
+      "system:serviceaccounts:security",
+      "system:authenticated"
+    ]
+  },
+  "sourceIPs": [
+    "192.168.102.21"
+  ],
+  "userAgent": "curl/7.64.0",
+  "objectRef": {
+    "resource": "secrets",
+    "namespace": "security",
+    "name": "mysql-admin",
+    "apiVersion": "v1"
+  },
+  "responseStatus": {
+    "metadata": {},
+    "code": 200
+  },
+  "responseObject": {
+    "kind": "Secret",
+    "apiVersion": "v1",
+    "metadata": {
+      "name": "mysql-admin",
+      "namespace": "security",
+      "selfLink": "/api/v1/namespaces/security/secrets/mysql-admin",
+      "uid": "37446ba1-61e9-45b7-9928-87b89f2efc31",
+      "resourceVersion": "29246",
+      "creationTimestamp": "2020-09-24T21:13:06Z",
+      "annotations": {
+        "kubectl.kubernetes.io/last-applied-configuration": "{\"apiVersion\":\"v1\",\"data\":{\"password\":\"bWdFVlBSdEpEWHBFCg==\"},\"kind\":\"Secret\",\"metadata\":{\"annotations\":{},\"name\":\"mysql-admin\",\"namespace\":\"security\"},\"type\":\"Opaque\"}\n"
+      },
+      "managedFields": [
+        {
+          "manager": "kubectl-client-side-apply",
+          "operation": "Update",
+          "apiVersion": "v1",
+          "time": "2020-09-24T21:13:06Z",
+          "fieldsType": "FieldsV1",
+          "fieldsV1": {
+            "f:data": {
+              ".": {},
+              "f:password": {}
+            },
+            "f:metadata": {
+              "f:annotations": {
+                ".": {},
+                "f:kubectl.kubernetes.io/last-applied-configuration": {}
+              }
+            },
+            "f:type": {}
+          }
+        }
+      ]
+    },
+    "data": {
+      "password": "bWdFVlBSdEpEWHBFCg=="
+    },
+    "type": "Opaque"
+  },
+  "requestReceivedTimestamp": "2020-09-24T21:28:40.558678Z",
+  "stageTimestamp": "2020-09-24T21:28:40.560599Z",
+  "annotations": {
+    "authentication.k8s.io/legacy-token": "system:serviceaccount:security:p.auster",
+    "authorization.k8s.io/decision": "allow",
+    "authorization.k8s.io/reason": "RBAC: allowed by ClusterRoleBinding \"p.auster\" of ClusterRole \"cluster-admin\" to ServiceAccount \"p.auster/security\""
+  }
+}
