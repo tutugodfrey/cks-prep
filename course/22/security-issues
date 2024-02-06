@@ -1,0 +1,5 @@
+deployment-redis.yaml
+pod-nginx.yaml
+pvc-manual.yaml
+statefulset-nginx.yaml
+Dockerfile-mysql
