@@ -1,0 +1,53 @@
+apiVersion: constraints.gatekeeper.sh/v1beta1
+kind: BlacklistImages
+metadata:
+  annotations:
+    kubectl.kubernetes.io/last-applied-configuration: |
+      {"apiVersion":"constraints.gatekeeper.sh/v1beta1","kind":"BlacklistImages","metadata":{"annotations":{},"name":"pod-trusted-images"},"spec":{"match":{"kinds":[{"apiGroups":[""],"kinds":["Pod"]}]}}}
+  creationTimestamp: "2024-01-06T10:40:12Z"
+  generation: 1
+  name: pod-trusted-images
+  resourceVersion: "28014"
+  uid: 57ac9157-0b8d-4919-9088-c359428cdcef
+spec:
+  match:
+    kinds:
+    - apiGroups:
+      - ""
+      kinds:
+      - Pod
+status:
+  auditTimestamp: "2024-02-25T23:36:25Z"
+  byPod:
+  - constraintUID: 57ac9157-0b8d-4919-9088-c359428cdcef
+    enforced: true
+    id: gatekeeper-audit-6859697479-fnzkl
+    observedGeneration: 1
+    operations:
+    - audit
+    - status
+  - constraintUID: 57ac9157-0b8d-4919-9088-c359428cdcef
+    enforced: true
+    id: gatekeeper-controller-manager-5f9f699cb8-2jc2x
+    observedGeneration: 1
+    operations:
+    - webhook
+  - constraintUID: 57ac9157-0b8d-4919-9088-c359428cdcef
+    enforced: true
+    id: gatekeeper-controller-manager-5f9f699cb8-hckwv
+    observedGeneration: 1
+    operations:
+    - webhook
+  - constraintUID: 57ac9157-0b8d-4919-9088-c359428cdcef
+    enforced: true
+    id: gatekeeper-controller-manager-5f9f699cb8-kzkll
+    observedGeneration: 1
+    operations:
+    - webhook
+  totalViolations: 1
+  violations:
+  - enforcementAction: deny
+    kind: Pod
+    message: not trusted image!
+    name: untrusted-5579d489cc-d4s52
+    namespace: default

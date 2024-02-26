@@ -1,0 +1,58 @@
+apiVersion: templates.gatekeeper.sh/v1beta1
+kind: ConstraintTemplate
+metadata:
+  annotations:
+    kubectl.kubernetes.io/last-applied-configuration: |
+      {"apiVersion":"templates.gatekeeper.sh/v1beta1","kind":"ConstraintTemplate","metadata":{"annotations":{},"name":"requiredlabels"},"spec":{"crd":{"spec":{"names":{"kind":"RequiredLabels"},"validation":{"openAPIV3Schema":{"properties":{"labels":{"items":"string","type":"array"}}}}}},"targets":[{"rego":"package k8srequiredlabels\n\nviolation[{\"msg\": msg, \"details\": {\"missing_labels\": missing}}] {\n  provided := {label | input.review.object.metadata.labels[label]}\n  required := {label | label := input.parameters.labels[_]}\n  missing := required - provided\n  count(missing) == 1\n  msg := sprintf(\"you must provide labels: %v\", [missing])\n}\n","target":"admission.k8s.gatekeeper.sh"}]}}
+  creationTimestamp: "2024-01-06T10:39:43Z"
+  generation: 2
+  name: requiredlabels
+  resourceVersion: "27673"
+  uid: 5a6a8b72-ad79-4cf8-9bbf-75f2425cca54
+spec:
+  crd:
+    spec:
+      names:
+        kind: RequiredLabels
+      validation:
+        openAPIV3Schema:
+          properties:
+            labels:
+              items: string
+              type: array
+  targets:
+  - rego: |
+      package k8srequiredlabels
+
+      violation[{"msg": msg, "details": {"missing_labels": missing}}] {
+        provided := {label | input.review.object.metadata.labels[label]}
+        required := {label | label := input.parameters.labels[_]}
+        missing := required - provided
+        count(missing) > 0
+        msg := sprintf("you must provide labels: %v", [missing])
+      }
+    target: admission.k8s.gatekeeper.sh
+status:
+  byPod:
+  - id: gatekeeper-audit-6859697479-fnzkl
+    observedGeneration: 2
+    operations:
+    - audit
+    - status
+    templateUID: 5a6a8b72-ad79-4cf8-9bbf-75f2425cca54
+  - id: gatekeeper-controller-manager-5f9f699cb8-2jc2x
+    observedGeneration: 2
+    operations:
+    - webhook
+    templateUID: 5a6a8b72-ad79-4cf8-9bbf-75f2425cca54
+  - id: gatekeeper-controller-manager-5f9f699cb8-hckwv
+    observedGeneration: 2
+    operations:
+    - webhook
+    templateUID: 5a6a8b72-ad79-4cf8-9bbf-75f2425cca54
+  - id: gatekeeper-controller-manager-5f9f699cb8-kzkll
+    observedGeneration: 2
+    operations:
+    - webhook
+    templateUID: 5a6a8b72-ad79-4cf8-9bbf-75f2425cca54
+  created: true

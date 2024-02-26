@@ -1,0 +1,19 @@
+    1  rm .bash_history 
+    2  exit
+    3  kubeadm version
+    4  kubelet --version
+    5  kubectl version
+    6  apt-mark hold kubeadm
+    7  apt-mark hold kubelet kubectl
+    8  apt update
+    9  kubeadm upgrade plan kubeadm=1.29.0
+   10  kubeadm upgrade apply v1.29.0
+   11  apt-mark hold kubeadm
+   12  apt-mark unhold kubelet kubectl
+   13  apt install kubectl=1.29.0-1.1 kubelet=1.29.0-1.1
+   14  apt search kubelet
+   15  apt search kubectl
+   16  apt-mark hold kubelet kubectl
+   17  systemctl restart kubelet
+   18  history
+

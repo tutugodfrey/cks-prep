@@ -1,0 +1,278 @@
+    1  ssh cluster1-node1
+    2  kubectl get svc
+    3  ssh cluster2-node1
+    4  scp /opt/course/9/profile  cluster1-node1:/root/
+    5  kubectl get nodes
+    6  kubectl label nodes cluster1-node1 security=apparmor
+    7  kubectl create deployment apparmor --image=nginx:1.19.2 --dry-run=client -o yaml > apparmor.yaml
+    8  vi apparmor.yaml 
+    9  kubectl apply -f apparmor.yaml 
+   10  vi apparmor.yaml 
+   11  kubectl apply -f apparmor.yaml 
+   12  kubectl get pod
+   13  kubectl get pod -w
+   14  kubectl logs apparmor-555d68c4d8-4p9xl 
+   15  kubectl logs apparmor-555d68c4d8-4p9xl  > /opt/course/9/logs
+   16  vi apparmor.yaml 
+   17  ls
+   18  ps aux
+   19  kill -9 63074
+   20  kill -9 63073
+   21  ls
+   22  kubectl config use-context infra-prod
+   23  vi np.yaml
+   24  kubectl apply-f np.yaml --namespace metadata-access
+   25  kubectl apply -f np.yaml --namespace metadata-access
+   26  vi np.yaml
+   27  kubectl apply -f np.yaml --namespace metadata-access
+   28  kubectl get pod -n metadata-access 
+   29  kubectl exec -n metadata-access  pod3-6656bbdf8d-wxxk7 -- curl 192.168.100.21:32000
+   30  kubectl exec -n metadata-access  pod2-dd5dfd5dd-bf2j9 -- curl 192.168.100.21:32000
+   31  ls
+   32  kubectl config use-context workload-prod
+   33  kubectl get pod -n team-yellow
+   34  kubectl get pod -n team-yellow -o wide
+   35  ssh cluster1-node1 
+   36  kubectl get pod -n team-yellow -o wide
+   37  kubectl get pod -n team-yellow
+   38  kubectl -n team-yellow scale deployment collector1 --replicas=0
+   39  kubectl config use-context workload-prod
+   40  kubectl -n team-pink create secret tls secure --cert /opt/course/15/tls.crt --key /opt/course/15/tls.key 
+   41  kubectl -n team-pink get ingress
+   42  kubectl -n team-pink edit ingress secure
+   43  kubectl config use-context workload-prod
+   44  vi /opt/course/16/image/Dockerfile
+   45  cd /opt/course/16/image/
+   46  vi keep
+   47  cat keep
+   48  podman build -t registry.killer.sh:5000/image-verify:v2 .
+   49  podman build -t registry.killer.sh:5000/image-verify:v2
+   50  podman run registry.killer.sh:5000/image-verify:v2 
+   51  podman push registry.killer.sh:5000/image-verify:v2
+   52  kubectl -n team-blue edit deployments.apps image-verify 
+   53  kubectl config use-context infra-prod
+   54  cd -
+   55  kubectl get nodes
+   56  ssh cluster2-controlplane1 
+   57  vi etc.kubernetes.audit.policy.yaml
+   58  kubectl config use-context infra-prod
+   59  kubectl -n security get secrets
+   60  cat /opt/course/18/audit.log | grep mysql-admin
+   61  cat /opt/course/18/audit.log | grep postgres001
+   62  cat /opt/course/18/audit.log | grep postgres002
+   63  cat /opt/course/18/audit.log | grep vault-token
+   64  cat /opt/course/18/audit.log | grep kubeadmin-token
+   65  echo -n randompassword | base64 
+   66  kubectl -n security edit secret mysql-admin 
+   67  kubectl -n security edit secret vault-token 
+   68  kubectl config use-context workload-prod
+   69  kubectl -n team-purple get deployment immutable-deployment -o yaml > /opt/course/19/immutable-deployment-new.yaml
+   70  vi /opt/course/19/immutable-deployment-new.yaml
+   71  kubectl apply -f /opt/course/19/immutable-deployment-new.yaml
+   72  vi /opt/course/19/immutable-deployment-new.yaml
+   73  kubectl apply -f /opt/course/19/immutable-deployment-new.yaml
+   74  ps aux
+   75  kubectl config use-context workload-stage
+   76  kubectl get nodes
+   77  ssh cluster3-controlplane1 
+   78  ssh cluster3-node1 
+   79  IMG=nginx:1.16.1-alpine
+   80  trivy image $IMG | grep -E "CVE-2020-10878|CVE-2020-1967"
+   81  IMG=k8s.gcr.io/kube-apiserver:v1.18.0
+   82  trivy image $IMG | grep -E "CVE-2020-10878|CVE-2020-1967"
+   83  IMG=k8s.gcr.io/kube-controller-manager:v1.18.0
+   84  trivy image $IMG | grep -E "CVE-2020-10878|CVE-2020-1967"
+   85  IMG=docker.io/weaveworks/weave-kube:2.7.0
+   86  trivy image $IMG | grep -E "CVE-2020-10878|CVE-2020-1967"
+   87  echo docker.io/weaveworks/weave-kube:2.7.0 > /opt/course/21/good-images
+   88  cat /opt/course/21/good-images
+   89  cd /opt/course/22/files
+   90  ls
+   91  vi deployment-nginx.yaml 
+   92  vi deployment-redis.yaml 
+   93  echo deployment-redis.yaml >> /opt/course/22/security-issues
+   94  vi Dockerfile-go 
+   95  vi Dockerfile-mysql 
+   96  echo Dockerfile-mysql >> /opt/course/22/security-issues
+   97  vi Dockerfile-py 
+   98  vi pod-nginx.yaml 
+   99  vi pvc-manual.yaml 
+  100  vi pv-manual.yaml 
+  101  vi sc-local.yaml 
+  102  vi statefulset-nginx.yaml 
+  103  echo statefulset-nginx.yaml  >> /opt/course/22/security-issues
+  104  cat /opt/course/22/security-issues
+  105  history
+  106  history > history.txt
+  107  ls
+  108  rm history.txt 
+  109  cd -
+  110  history > history.txt
+    1  kubectl config get-contexts -o yaml
+    2  kubectl config get-contexts -o name
+    3  kubectl config get-contexts -o name > /opt/course/1/contexts
+    4  kubectl config view --help
+    5  kubectl config view -o jsonpath='{.users[?(@.name == "restricted@infra-prod")].user.client-certificate-data}'
+    6  kubectl config view --raw -o jsonpath='{.users[?(@.name == "restricted@infra-prod")].user.client-certificate-data}'
+    7  kubectl config view --raw -o jsonpath='{.users[?(@.name == "restricted@infra-prod")].user.client-certificate-data}' > /opt/course/1/cert
+    8  kubectl config use-context workload-prod
+    9  echo webapi-5d669897cd-qsq2b
+   10  rating-service-589d6cbbfc-l9lzl
+   11  kubectl get pods -ALL | grep webapi
+   12  kubectl get pods -ALL | grep rating-service
+   13  kubectl get svc
+   14  vi falco.log
+   15  cat falco.log | cut -d " " -f 9
+   16  cat falco.log | cut -d " " -f 9 > /opt/course/2/falco.log
+   17  kubectl -n team-blue scale deployment webapi --replicas=0
+   18  kubectl -n team-purple scale deployment rating-service --replicas=0
+   19  kubectl config use-context workload-prod
+   20  kubectl get nodes
+   21  ssh cluster1-controlplane1 
+   22  kubectl config use-context workload-prod
+   23  kubectl get pod -n team-red
+   24  kubectl label namespace team-red pod-security.kubernetes.io/enforce=baseline
+   25  kubectl -n team-red delete pod container-host-hacker-746dbfc8c-wm2pp --force --grace-period=0
+   26  kubectl -n team-red describe replicasets.apps container-host-hacker-746dbfc8c | grep Events -A 100
+   27  kubectl -n team-red describe replicasets.apps container-host-hacker-746dbfc8c | grep Events -A 100 > /opt/course/4/logs
+   28  kubectl config use-context infra-prod
+   29  ssh cluster2-controlplane1
+   30  cd /opt/course/6/binaries/
+   31  ls
+   32  sha512sum kube-apiserver 
+   33  echo f417c0555bc0167355589dd1afe23be9bf909bf98312b1025f12015d1b58a1c62c9908c0067a7764fa35efdac7016a9efa8711a44425dd6692906a7c283f032c > test
+   34  echo f417c0555bc0167355589dd1afe23be9bf909bf98312b1025f12015d1b58a1c62c9908c0067a7764fa35efdac7016a9efa8711a44425dd6692906a7c283f032c   >> test
+   35  cat test | uniq
+   36  sha512sum kube-controller-manager 
+   37  echo 60100cc725e91fe1a949e1b2d0474237844b5862556e25c2c655a33b0a8225855ec5ee22fa4927e6c46a60d43a7c4403a27268f96fbb726307d1608b44f38a60 > test
+   38  echo 60100cc725e91fe1a949e1b2d0474237844b5862556e25c2c655a33boa8225855ec5ee22fa4927e6c46a60d43a7c4403a27268f96fbb726307d1608b44f38a60 >> test
+   39  cat test | uniq
+   40  mv kube-controller-manager ~/
+   41  sha512sum kube-proxy 
+   42  echo 52f9d8ad045f8eee1d689619ef8ceef2d86d50c75a6a332653240d7ba5b2a114aca056d9e513984ade24358c9662714973c1960c62a5cb37dd375631c8a614c6 > test
+   43  echo 52f9d8ad045f8eee1d689619ef8ceef2d86d50c75a6a332653240d7ba5b2a114aca056d9e513984ade24358c9662714973c1960c62a5cb37dd375631c8a614c6 >> test
+   44  cat test | uniq
+   45  sha512sum kubelet 
+   46  echo 7b720598e6a3483b45c537b57d759e3e82bc5c53b3274f681792f62e941019cde3d51a7f9b55158abf3810d506146bc0aa7cf97b36f27f341028a54431b335be > test
+   47  echo 4be40f2440619e990897cf956c32800dc96c2c983bf64519854a3309fa5aa21827991559f9c44595098e27e6f2ee4d64a3fdec6baba8a177881f20e3ec61e26c >> test
+   48  cat test | uniq
+   49  mv kubelet ~/
+   50  ls
+   51  mv test ~/
+   52  ls
+   53  cd -
+   54  kubectl config use-context infra-prod
+   55  kubectl get crds
+   56  kubectl get constrainttemplate
+   57  kubectl get constrainttemplate blacklistimages 
+   58  kubectl get constraint
+   59  kubectl get blacklistimages pod-trusted-images
+   60  kubectl edit blacklistimages pod-trusted-images
+   61  kubectl edit constrainttemplate blacklistimages 
+   62  kubectl get deployment untrusted 
+   63  kubectl get deployment untrusted -o yaml
+   64  kubectl describe deployment untrusted
+   65  kubectl edit constrainttemplate blacklistimages 
+   66  kubectl run bad-image --image=very-bad-registry.com/image
+   67  kubectl describe deployment untrusted
+   68  kubectl describe constrainttemplate blacklistimages 
+   69  kubectl describe blacklistimages.constraints.gatekeeper.sh pod-trusted-images 
+   70  kubectl config use-context workload-prod
+   71  kubectl -n kubernetes-dashboard edit deployment kubernetes-dashboard 
+   72  kubectl get -n kubernetes-dashboard pod 
+   73  kubectl -n kubernetes-dashboard edit svc kubernetes-dashboard 
+   74  ssh cluster1-node1
+   75  kubectl config use-context workload-prod
+   76  vi 10-gvisor.yaml
+   77  kubectl apply -f 10-gvisor.yaml 
+   78  kubectl get runtimeclass
+   79  vi 10-pod-gvisor.yaml
+   80  kubectl run gvisor-test --image=nginx:1.19.2 --dry-run=client -o yaml > 10-pod-gvisor.yaml
+   81  vi 10-pod-gvisor.yaml 
+   82  kubectl apply -f 10-pod-gvisor.yaml 
+   83  kubectl -n team-purple get pod -w
+   84  kubectl -n team-purple exec gvisor-test -- dmesg
+   85  kubectl -n team-purple exec gvisor-test -- dmesg > /opt/course/10/gvisor-test-dmesg
+   86  kubectl config use-context workload-prod
+   87  kubectl get nodes
+   88  ssh cluster1-controlplane1 
+   89  scp cluster1-controlplane1:/etcd-secret-content  /opt/course/11/
+   90  scp cluster1-controlplane1:/root/etcd-secret-content  /opt/course/11/
+   91  vi /opt/course/11/etcd-secret-content 
+   92  kubectl -n team-green get secrets
+   93  kubectl -n team-green get secrets -o yaml
+   94  echo Y29uZmlkZW50aWFs | base64 -d > /opt/course/11/database-password
+   95  vi /opt/course/11/database-password
+   96  kubectl config use-context restricted@infra-prod 
+   97  kubectl get pod
+   98  kubectl get secrets
+   99  kubectl get pod -n restricted
+  100  kubectl get pod -n restricted -o yaml
+  101  kubectl get pod -n restricted
+  102  kubectl get pod -n restricted pod1 -- ls //etc/secret-volume
+  103  kubectl exec  -n restricted pod1-c94846cf-4cwwt -- ls /etc/secret-volume
+  104  kubectl exec  -n restricted pod1-c94846cf-4cwwt -- cat /etc/secret-volume/password
+  105  kubectl exec  -n restricted pod1-c94846cf-4cwwt -- cat /etc/secret-volume/password > /opt/course/12/secret1
+  106  kubectl get pod -n restricted pod1-c94846cf-4cwwt -o yaml
+  107  kubectl get pod -n restricted pod2-7b55965974-lqtpz -o yaml
+  108  kubectl exec -n restricted pod2-7b55965974-lqtpz -- env | grep PASSWORD 
+  109  kubectl exec -n restricted pod2-7b55965974-lqtpz -- env | grep PASSWORD > /opt/course/12/secret2
+  110  vi cat test | uniq
+  111  vi /opt/course/12/secret2
+  112  kubectl -n restricted get pod
+  113  kubectl -n restricted get pod pod3-679dff6f6d-pdhlj -o yaml
+  114  kubectl -n restricted exec -it pod3-679dff6f6d-pdhlj -- sh
+  115  echo "cEVuRXRSYVRpT24tdEVzVGVSCg==" | base64 -d > /opt/course/12/secret3
+  116  echo curl -H "Authorization: Bearer $TOKEN" https://kubernetes.default/api/v1/namespaces/restricted/secrets/secret3 -k
+  117  kubectl drain cluster3-controlplane1 --ignore-daemonsets
+  118  kubectl get nodes
+  119  kubectl version
+  120  kubectl uncordon cluster3-controlplane1 
+  121  kubectl get nodes
+  122  kubectl drain cluster3-node1 --ignore-daemonsets
+  123  kubectl uncordon cluster3-node1
+  124  kubectl config use-context infra-prod
+  125  kubectl get pod
+  126  kubectl get clusterroles
+  127  kubectl get clusterroles | grep gianna
+  128  kubectl edit clusterroles gianna
+  129  kubectl get clusterrolebinding | grep gianna
+  130  kubectl create clusterrole gianna-access --verb create --resource pods,deployments
+  131  kubectl create rolebinding gianna-access --clusterrole gianna-access --user gianna --namespace security
+  132  kubectl create rolebinding gianna-access --clusterrole gianna-access --user gianna --namespace restricted 
+  133  kubectl create rolebinding gianna-access --clusterrole gianna-access --user gianna --namespace internal
+  134  kubectl config use-context workload-stage
+  135  kubectl get constraints
+  136  kubectl get constraint
+  137  kubectl get constriants
+  138  kubectl get constraints
+  139  kubectl get crds
+  140  kubectl get constraints
+  141  kubectl get constrainttemplate
+  142  kubectl edit constrainttemplate requiredlabels 
+  143* kubectl get constrainttemplate requiredlabels -o yaml > requiredlabels-opa-contrainttemplate -
+  144  kubectl edit requiredlabels.constraints.gatekeeper.sh namespace-mandatory-labels 
+  145  kubectl get requiredlabels.constraints.gatekeeper.sh namespace-mandatory-labels
+  146  kubectl get requiredlabels.constraints.gatekeeper.sh namespace-mandatory-labels -o yaml namespace-mandatory-labels.yaml
+  147  kubectl get requiredlabels.constraints.gatekeeper.sh namespace-mandatory-labels -o yaml > namespace-mandatory-labels.yaml
+  148  kubectl get constrainttemplate
+  149  kubectl get constrainttemplate blacklistimages
+  150  kubectl get constrainttemplate blacklistimages -o yaml > blacklistimage-opa-constraint-template.yaml
+  151  kubectl get blacklistimages.constraints.gatekeeper.sh 
+  152  kubectl get blacklistimages.constraints.gatekeeper.sh  pod-trusted-images -o yaml > pod-trusted-image.yaml
+  153  kubet
+  154  kubectl get constraints
+  155  kubectl get requiredlabels.constraints.gatekeeper.sh namespace-mandatory-labels 
+  156  kubectl get requiredlabels.constraints.gatekeeper.sh namespace-mandatory-labels  -o yaml
+  157  echo sidecar-injector > /opt/course/p2/fix-namespaces
+  158  echo jeffs-playground >> /opt/course/p2/fix-namespaces
+  159  kubectl config use-context workload-stage
+  160  ls
+  161  kubectl get nodes
+  162  ssh cluster3-node1 
+  163  cat /opt/course/1/cert
+  164  kubectl config view
+  165  history
+  166  kubectl config view --raw -o jsonpath='{.users[?(@.name == "restricted@infra-prod")].user.client-certificate-data}'  | base64 -d > /opt/course/1/cert
+  167  vi /opt/course/1/cert
+  168  history >> history.txt 

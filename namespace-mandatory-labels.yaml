@@ -1,0 +1,60 @@
+apiVersion: constraints.gatekeeper.sh/v1beta1
+kind: RequiredLabels
+metadata:
+  annotations:
+    kubectl.kubernetes.io/last-applied-configuration: |
+      {"apiVersion":"constraints.gatekeeper.sh/v1beta1","kind":"RequiredLabels","metadata":{"annotations":{},"name":"namespace-mandatory-labels"},"spec":{"match":{"kinds":[{"apiGroups":[""],"kinds":["Namespace"]}]},"parameters":{"labels":["security-level"]}}}
+  creationTimestamp: "2024-01-06T10:40:12Z"
+  generation: 2
+  name: namespace-mandatory-labels
+  resourceVersion: "27841"
+  uid: 0bc0d34d-6b4c-4400-8da3-f2644b2c3b59
+spec:
+  match:
+    kinds:
+    - apiGroups:
+      - ""
+      kinds:
+      - Namespace
+  parameters:
+    labels:
+    - security-level
+    - management-team
+status:
+  auditTimestamp: "2024-02-25T23:34:25Z"
+  byPod:
+  - constraintUID: 0bc0d34d-6b4c-4400-8da3-f2644b2c3b59
+    enforced: true
+    id: gatekeeper-audit-6859697479-fnzkl
+    observedGeneration: 2
+    operations:
+    - audit
+    - status
+  - constraintUID: 0bc0d34d-6b4c-4400-8da3-f2644b2c3b59
+    enforced: true
+    id: gatekeeper-controller-manager-5f9f699cb8-2jc2x
+    observedGeneration: 2
+    operations:
+    - webhook
+  - constraintUID: 0bc0d34d-6b4c-4400-8da3-f2644b2c3b59
+    enforced: true
+    id: gatekeeper-controller-manager-5f9f699cb8-hckwv
+    observedGeneration: 2
+    operations:
+    - webhook
+  - constraintUID: 0bc0d34d-6b4c-4400-8da3-f2644b2c3b59
+    enforced: true
+    id: gatekeeper-controller-manager-5f9f699cb8-kzkll
+    observedGeneration: 2
+    operations:
+    - webhook
+  totalViolations: 2
+  violations:
+  - enforcementAction: deny
+    kind: Namespace
+    message: 'you must provide labels: {"management-team"}'
+    name: jeffs-playground
+  - enforcementAction: deny
+    kind: Namespace
+    message: 'you must provide labels: {"management-team", "security-level"}'
+    name: sidecar-injector

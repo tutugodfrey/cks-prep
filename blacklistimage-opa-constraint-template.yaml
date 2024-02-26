@@ -1,0 +1,56 @@
+apiVersion: templates.gatekeeper.sh/v1beta1
+kind: ConstraintTemplate
+metadata:
+  annotations:
+    kubectl.kubernetes.io/last-applied-configuration: |
+      {"apiVersion":"templates.gatekeeper.sh/v1beta1","kind":"ConstraintTemplate","metadata":{"annotations":{},"name":"blacklistimages"},"spec":{"crd":{"spec":{"names":{"kind":"BlacklistImages"}}},"targets":[{"rego":"package k8strustedimages\n\nimages {\n  image := input.review.object.spec.containers[_].image\n  not startswith(image, \"docker-fake.io/\")\n  not startswith(image, \"google-gcr-fake.com/\")\n}\n\nviolation[{\"msg\": msg}] {\n  not images\n  msg := \"not trusted image!\"\n}\n","target":"admission.k8s.gatekeeper.sh"}]}}
+  creationTimestamp: "2024-01-06T10:39:43Z"
+  generation: 2
+  name: blacklistimages
+  resourceVersion: "15893"
+  uid: b9303371-e6a4-4041-8686-609e37488127
+spec:
+  crd:
+    spec:
+      names:
+        kind: BlacklistImages
+  targets:
+  - rego: |
+      package k8strustedimages
+
+      images {
+        image := input.review.object.spec.containers[_].image
+        not startswith(image, "docker-fake.io/")
+        not startswith(image, "google-gcr-fake.com/")
+        not startswith(image, "very-bad-registry.com/")
+      }
+
+      violation[{"msg": msg}] {
+        not images
+        msg := "not trusted image!"
+      }
+    target: admission.k8s.gatekeeper.sh
+status:
+  byPod:
+  - id: gatekeeper-audit-6859697479-fnzkl
+    observedGeneration: 2
+    operations:
+    - audit
+    - status
+    templateUID: b9303371-e6a4-4041-8686-609e37488127
+  - id: gatekeeper-controller-manager-5f9f699cb8-2jc2x
+    observedGeneration: 2
+    operations:
+    - webhook
+    templateUID: b9303371-e6a4-4041-8686-609e37488127
+  - id: gatekeeper-controller-manager-5f9f699cb8-hckwv
+    observedGeneration: 2
+    operations:
+    - webhook
+    templateUID: b9303371-e6a4-4041-8686-609e37488127
+  - id: gatekeeper-controller-manager-5f9f699cb8-kzkll
+    observedGeneration: 2
+    operations:
+    - webhook
+    templateUID: b9303371-e6a4-4041-8686-609e37488127
+  created: true

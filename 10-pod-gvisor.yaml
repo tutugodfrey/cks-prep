@@ -1,0 +1,17 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  creationTimestamp: null
+  labels:
+    run: gvisor-test
+  name: gvisor-test2
+  namespace: team-purple
+spec:
+  containers:
+  - image: nginx:1.19.2
+    name: gvisor-test
+    resources: {}
+  dnsPolicy: ClusterFirst
+  runtimeClassName: gvisor
+  restartPolicy: Always
+status: {}
